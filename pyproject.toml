@@ -15,6 +15,9 @@ dependencies = [
     "typer>=0.27.2,<1",
 ]
 
+[project.scripts]
+reporemedy = "reporemedy.cli:main"
+
 [dependency-groups]
 dev = ["pytest>=8.3,<10", "pytest-cov>=6,<8", "ruff>=0.11,<1", "mypy>=1.15,<2", "build>=1.2,<2", "pip-audit>=2.9,<3"]
 
