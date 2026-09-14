@@ -3,8 +3,10 @@ from pathlib import Path
 
 import pytest
 
+from reporemedy.cli import main
 from reporemedy.errors import RemedyError
-from reporemedy.models import repository_name
+from reporemedy.models import ReportType, repository_name
+from reporemedy.readers import read_report
 from reporemedy.readers.repoauditor import read_repoauditor
 from reporemedy.readers.scorecard import read_scorecard
 
@@ -104,3 +106,16 @@ def test_clean_repoauditor_report():
         "Metrics\nSuccessful: 10\nWarnings: 0 (0%)\nErrors: 0 (0%)", "a/b", "d"
     )
     assert report.findings == []
+
+
+def test_file_and_cli(tmp_path, capsys):
+    path = tmp_path / "report.json"
+    path.write_text(json.dumps(scorecard()))
+    assert read_report(path, ReportType.SCORECARD, "acme/demo").source_sha256
+    assert (
+        main(["inspect", str(path), "--repo", "acme/demo", "--report-type", "ossf-scorecard"]) == 0
+    )
+    assert '"Security-Policy"' in capsys.readouterr().out
+    with pytest.raises(SystemExit) as error:
+        main(["inspect", "absent.json", "--repo", "acme/demo", "--report-type", "ossf-scorecard"])
+    assert error.value.code == 2
