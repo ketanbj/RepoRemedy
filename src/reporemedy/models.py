@@ -57,3 +57,76 @@ class Report(Contract):
     notices: list[str] = Field(default_factory=list)
 
     _repository = field_validator("repository")(repository_name)
+
+
+class RepositoryFile(Contract):
+    content: str
+    sha: str
+
+
+class Context(Contract):
+    repository: str
+    default_branch: str
+    commit: str
+    tree_sha: str
+    paths: list[str]
+    files: dict[str, RepositoryFile]
+    settings: dict[str, bool | None] = Field(default_factory=dict)
+    notices: list[str] = Field(default_factory=list)
+
+
+class Change(Contract):
+    path: str
+    content: str = Field(min_length=1, max_length=64_000)
+    previous_content: str | None = Field(default=None, max_length=64_000)
+    previous_sha: str | None = None
+
+    @field_validator("path")
+    @classmethod
+    def safe_path(cls, value: str) -> str:
+        parts = value.split("/")
+        if (
+            not value
+            or len(value) > 240
+            or any(p in {"", ".", ".."} for p in parts)
+            or any(c in value for c in "\\\x00\r\n:")
+            or any(p.lower() == ".git" or p.lower().startswith(".env") for p in parts)
+        ):
+            raise ValueError("Unsafe repository file path")
+        return value
+
+
+class Proposal(Contract):
+    id: str = Field(pattern=r"^[a-f0-9]{16}$")
+    finding: Finding
+    action: str = Field(pattern=r"^(setting|add-file|edit-file)$")
+    title: str = Field(min_length=1, max_length=180)
+    purpose: str = Field(min_length=1, max_length=4000)
+    impact: str = Field(min_length=1, max_length=4000)
+    effort: str = Field(min_length=1, max_length=2000)
+    steps: list[str] = Field(min_length=1, max_length=20)
+    validation: list[str] = Field(min_length=1, max_length=20)
+    required_inputs: list[str] = Field(default_factory=list)
+    changes: list[Change] = Field(default_factory=list, max_length=5)
+    warnings: list[str] = Field(default_factory=list)
+
+
+class Outcome(Contract):
+    finding: str
+    status: str = Field(pattern=r"^(proposed|unsupported|skipped|needs-input|failed)$")
+    message: str
+    proposal_id: str | None = None
+
+
+class Run(Contract):
+    schema_version: int = Field(default=1, ge=1, le=1)
+    repository: str
+    mode: Mode
+    report: Report
+    default_branch: str
+    base_commit: str
+    proposals: list[Proposal]
+    outcomes: list[Outcome]
+    notices: list[str] = Field(default_factory=list)
+
+    _repository = field_validator("repository")(repository_name)
