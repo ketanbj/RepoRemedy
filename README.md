@@ -1,5 +1,8 @@
 # RepoRemedy
 
-Standalone, review-first remediation of RepoAuditor and OpenSSF Scorecard findings.
+Standalone remediation for existing repository audit reports. This foundation
+normalizes saved RepoAuditor text and Scorecard v5 JSON through independent readers.
+It does not import or modify either auditor. The next slice adds the Typer CLI.
 
-Implementation is being delivered through small pull requests aligned with the Letter of Intent.
+Use Python 3.11+ and `uv sync --locked`. Run `uv run pytest` to validate the readers.
+See [supported report formats](docs/report-formats.md) and [contribution policy](CONTRIBUTING.md).
