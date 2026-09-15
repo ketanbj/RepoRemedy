@@ -5,6 +5,7 @@ import pytest
 from test_remedies import context
 
 from reporemedy.errors import RemedyError
+from reporemedy.feedback import collect_feedback
 from reporemedy.github import GitHub
 from reporemedy.preview import prepare, write_preview
 from reporemedy.publish import marker, publish, validate_run
@@ -153,3 +154,57 @@ def test_exclusive_lock_and_invalid_run(tmp_path):
     assert not (tmp_path / ".publish.lock").exists()
     with pytest.raises(RemedyError, match="run.json"):
         read_run(tmp_path)
+
+
+@pytest.mark.parametrize(
+    "kind,closed,merged,association,comment,expected",
+    [
+        ("issue", True, False, "OWNER", "Thank you", "closed-without-decision"),
+        ("issue", False, False, "OWNER", "reporemedy: accepted", "accepted"),
+        ("issue", False, False, "NONE", "reporemedy: accepted", "pending"),
+        ("pr", True, True, "NONE", "", "accepted"),
+        ("pr", False, False, "COLLABORATOR", "reporemedy: needs-adjustment", "needs-adjustment"),
+    ],
+)
+def test_feedback_acceptance_is_evidence_based(
+    tmp_path, kind, closed, merged, association, comment, expected
+):
+    (tmp_path / "publication.json").write_text(
+        json.dumps(
+            {
+                "repository": "acme/demo",
+                "items": [
+                    {
+                        "id": "test",
+                        "number": 1,
+                        "url": "https://github.com/acme/demo/issues/1",
+                        "kind": kind,
+                        "status": "published",
+                    }
+                ],
+            }
+        )
+    )
+
+    def handler(request):
+        if request.url.path.endswith("/comments"):
+            result = [
+                {"body": comment, "author_association": association, "html_url": "comment-url"}
+            ]
+        elif request.url.path.endswith("/reviews"):
+            result = []
+        else:
+            result = {
+                "state": "closed" if closed else "open",
+                "merged_at": "date" if merged else None,
+            }
+        return httpx.Response(200, json=result)
+
+    github = GitHub(transport=httpx.MockTransport(handler))
+    try:
+        result = collect_feedback(tmp_path, github)
+        assert result["items"][0]["decision"] == expected
+        assert result["summary"]["accepted"] == (1 if expected == "accepted" else 0)
+        assert (tmp_path / "feedback.json").exists()
+    finally:
+        github.close()
