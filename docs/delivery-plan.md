@@ -29,6 +29,7 @@ separately by the [size check](../scripts/check_pr_size.py).
 | 13 | 3 | [#6](https://github.com/ketanbj/shadowRepoRemedy/pull/6) | RR-301, RR-303, RR-304 | Pilot-driven hardening, HTTP-fixture regressions and coverage gate |
 | 14 | 3 | [#14](https://github.com/ketanbj/shadowRepoRemedy/pull/14) | RR-302 | Preview pilot results, provenance and reproduction helpers |
 | 15 | 3 | [#7](https://github.com/ketanbj/shadowRepoRemedy/pull/7) | RR-101, RR-305, RR-306 | Scope documentation, installation guide and acceptance-gap handoff |
+| 16 | Supporting engineering | [#16](https://github.com/ketanbj/shadowRepoRemedy/pull/16) | — | Rename the project, distribution, CLI and Python package; preserve publication compatibility |
 
 These PRs form a dependent stack. Merge in the order above: merge the first PR into
 main, retarget the next PR to main, then merge it. Do not merge an upper PR into its
