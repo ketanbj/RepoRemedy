@@ -24,6 +24,15 @@ MAX_CONTEXT_BYTES = 100_000
 
 
 def load_context(github: GitHub, repository: str) -> Context:
+    try:
+        return _load_context(github, repository)
+    except (KeyError, TypeError, ValueError, AttributeError) as exc:
+        raise RemedyError(
+            "GitHub returned incomplete repository context; retry or check API compatibility"
+        ) from exc
+
+
+def _load_context(github: GitHub, repository: str) -> Context:
     repository = repository_name(repository)
     root = f"/repos/{repository}"
     meta = github.request("GET", root)
@@ -41,7 +50,13 @@ def load_context(github: GitHub, repository: str) -> Context:
     files: dict[str, RepositoryFile] = {}
     total = 0
     for path in sorted(entries, key=lambda p: (len(PurePosixPath(p).parts), p)):
-        if PurePosixPath(path).name.lower() not in GUIDE_NAMES:
+        relative = PurePosixPath(path)
+        # Only guidance governing the supported root/.github/docs document targets.
+        # Vendor READMEs and unrelated nested projects do not govern these edits.
+        relevant = len(relative.parts) == 1 or (
+            len(relative.parts) == 2 and relative.parts[0] in {".github", "docs"}
+        )
+        if not relevant or relative.name.lower() not in GUIDE_NAMES:
             continue
         entry = entries[path]
         if entry.get("mode") != "100644" or entry.get("size", MAX_FILE_BYTES + 1) > MAX_FILE_BYTES:

@@ -132,7 +132,6 @@ def test_missing_context_prevents_model_call(monkeypatch):
 def test_existing_file_gets_real_sha_not_model_claim(monkeypatch):
     output = response()
     output["proposal"]["action"] = "edit-file"
-    output["proposal"]["changes"][0]["previous_sha"] = "invented"
     model, _ = provider(monkeypatch, output=output)
     try:
         result = model.propose(

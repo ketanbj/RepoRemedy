@@ -79,7 +79,7 @@ class GitHub:
         for page in range(1, 101):
             separator = "&" if "?" in path else "?"
             result = self.request("GET", f"{path}{separator}per_page=100&page={page}")
-            if not isinstance(result, list):
+            if not isinstance(result, list) or any(not isinstance(i, dict) for i in result):
                 raise RemedyError("Expected a GitHub list response")
             items.extend(result)
             if len(result) < 100:
