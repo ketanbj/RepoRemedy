@@ -9,8 +9,8 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
-from reporemedy import __version__
-from reporemedy.cli import app, main
+from shadowreporemedy import __version__
+from shadowreporemedy.cli import app, main
 
 
 def test_help_and_version_without_a_subcommand(capsys):
@@ -86,7 +86,7 @@ def test_report_error_is_concise_and_exits_two(tmp_path, capsys):
 
 def test_module_entrypoint_works_outside_checkout(tmp_path):
     result = subprocess.run(
-        [sys.executable, "-m", "reporemedy", "--version"],
+        [sys.executable, "-m", "shadowreporemedy", "--version"],
         cwd=tmp_path,
         capture_output=True,
         text=True,

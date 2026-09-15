@@ -5,11 +5,11 @@ import pytest
 from test_readers import scorecard
 from test_remedies import context, finding
 
-from reporemedy.errors import RemedyError
-from reporemedy.models import Change, Mode, RepositoryFile
-from reporemedy.preview import prepare
-from reporemedy.providers import ModelProvider, redact, validate_proposal
-from reporemedy.readers.scorecard import read_scorecard
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.models import Change, Mode, RepositoryFile
+from shadowreporemedy.preview import prepare
+from shadowreporemedy.providers import ModelProvider, redact, validate_proposal
+from shadowreporemedy.readers.scorecard import read_scorecard
 
 
 def response():

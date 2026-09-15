@@ -10,8 +10,8 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from reporemedy.errors import RemedyError
-from reporemedy.models import Run
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.models import Run
 
 
 def read_run(directory: Path) -> Run:
@@ -22,12 +22,12 @@ def read_run(directory: Path) -> Run:
         return Run.model_validate_json(path.read_text(encoding="utf-8"))
     except (OSError, ValidationError) as exc:
         raise RemedyError(
-            "Cannot read run.json; use a complete RepoRemedy preview directory"
+            "Cannot read run.json; use a complete shadowRepoRemedy preview directory"
         ) from exc
 
 
 def atomic_json(path: Path, value: Any) -> None:
-    fd, name = tempfile.mkstemp(prefix=".reporemedy-", dir=path.parent)
+    fd, name = tempfile.mkstemp(prefix=".shadowreporemedy-", dir=path.parent)
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as stream:
             json.dump(value, stream, ensure_ascii=False, indent=2)

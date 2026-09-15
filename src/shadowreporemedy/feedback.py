@@ -5,12 +5,15 @@ import re
 from pathlib import Path
 from typing import Any
 
-from reporemedy.errors import RemedyError
-from reporemedy.github import GitHub
-from reporemedy.models import repository_name
-from reporemedy.storage import atomic_json
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.github import GitHub
+from shadowreporemedy.models import repository_name
+from shadowreporemedy.storage import atomic_json
 
-DECISION = re.compile(r"^reporemedy: (accepted|declined|needs-adjustment|too-difficult)\s*$", re.M)
+DECISION = re.compile(
+    r"^(?:shadowRepoRemedy|reporemedy): (accepted|declined|needs-adjustment|too-difficult)\s*$",
+    re.M | re.I,
+)
 MAINTAINER = {"OWNER", "MEMBER", "COLLABORATOR"}
 
 

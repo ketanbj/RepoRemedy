@@ -3,7 +3,7 @@ requires = ["hatchling>=1.27,<2"]
 build-backend = "hatchling.build"
 
 [project]
-name = "reporemedy"
+name = "shadowRepoRemedy"
 version = "0.1.0"
 description = "Turn existing repository audit findings into reviewable GitHub improvements"
 readme = "README.md"
@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
-reporemedy = "reporemedy.cli:main"
+shadowRepoRemedy = "shadowreporemedy.cli:main"
 
 [dependency-groups]
 dev = ["pytest>=8.3,<10", "pytest-cov>=6,<8", "ruff>=0.11,<1", "mypy>=1.15,<2", "build>=1.2,<2", "pip-audit>=2.9,<3"]
@@ -38,6 +38,6 @@ files = ["src"]
 
 [tool.coverage.run]
 branch = true
-source = ["reporemedy"]
+source = ["shadowreporemedy"]
 [tool.coverage.report]
 show_missing = true

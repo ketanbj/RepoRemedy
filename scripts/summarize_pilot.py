@@ -5,7 +5,7 @@ import json
 from collections import Counter
 from pathlib import Path
 
-from reporemedy.storage import read_run
+from shadowreporemedy.storage import read_run
 
 
 def main() -> None:

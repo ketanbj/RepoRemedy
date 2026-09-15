@@ -2,8 +2,8 @@
 
 import re
 
-from reporemedy.errors import RemedyError
-from reporemedy.models import Finding, Report, ReportType
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.models import Finding, Report, ReportType
 
 ANSI = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]")
 HEADER = re.compile(r"\[(Success|Warning|Error|DoesNotApply)\]\s+([A-Za-z][A-Za-z0-9_]*)")

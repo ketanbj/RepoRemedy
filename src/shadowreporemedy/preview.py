@@ -3,10 +3,10 @@
 import difflib
 from pathlib import Path
 
-from reporemedy.catalog import propose_fixed
-from reporemedy.errors import RemedyError
-from reporemedy.models import Context, Mode, Outcome, Proposal, Report, Run
-from reporemedy.providers import ModelProvider
+from shadowreporemedy.catalog import propose_fixed
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.models import Context, Mode, Outcome, Proposal, Report, Run
+from shadowreporemedy.providers import ModelProvider
 
 
 def prepare(

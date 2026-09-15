@@ -159,7 +159,7 @@ pipeline and coverage gate. Refresh the audit for the release candidate being ap
 ### RR-305 — Verify package installation and user guidance
 
 As a release engineer, I want a verified package and installation guide so a new user
-can run RepoRemedy outside the development checkout.
+can run shadowRepoRemedy outside the development checkout.
 
 Acceptance: build distributions; verify clean installation and CLI smoke tests outside
 the checkout; document configuration, sample reports, commands and limits. PR #7,

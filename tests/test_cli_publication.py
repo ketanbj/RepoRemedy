@@ -4,8 +4,8 @@ import httpx
 import pytest
 from test_publication import Server, make_run
 
-from reporemedy.cli import main
-from reporemedy.github import GitHub
+from shadowreporemedy.cli import main
+from shadowreporemedy.github import GitHub
 
 
 @pytest.fixture
@@ -13,9 +13,9 @@ def publication(tmp_path, monkeypatch):
     run, out = make_run(tmp_path)
     server = Server()
     github = GitHub("test", transport=httpx.MockTransport(server))
-    monkeypatch.setattr("reporemedy.cli.GitHub", lambda token: github)
-    monkeypatch.setattr("reporemedy.cli.github_token", lambda: "test")
-    monkeypatch.setattr("reporemedy.cli.load_environment", lambda: None)
+    monkeypatch.setattr("shadowreporemedy.cli.GitHub", lambda token: github)
+    monkeypatch.setattr("shadowreporemedy.cli.github_token", lambda: "test")
+    monkeypatch.setattr("shadowreporemedy.cli.load_environment", lambda: None)
     return run, out, server, github
 
 
@@ -88,7 +88,7 @@ def test_bad_selection_fails_before_any_write(publication, selection):
 def test_publication_failure_returns_one_and_closes_client(publication, monkeypatch, capsys):
     run, out, server, github = publication
     monkeypatch.setattr(
-        "reporemedy.cli.publish",
+        "shadowreporemedy.cli.publish",
         lambda *args: [
             {"id": run.proposals[0].id, "status": "failed", "error": "permission denied"}
         ],
@@ -105,7 +105,7 @@ def test_feedback_uses_its_directory_and_returns_zero(publication, monkeypatch, 
         assert directory == out and client is github
         return {"summary": "1 pending"}
 
-    monkeypatch.setattr("reporemedy.cli.collect_feedback", collect)
+    monkeypatch.setattr("shadowreporemedy.cli.collect_feedback", collect)
     assert main(["feedback", str(out)]) == 0
     assert capsys.readouterr().out.strip() == "1 pending"
     assert github.client.is_closed

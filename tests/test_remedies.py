@@ -4,13 +4,13 @@ import json
 import httpx
 import pytest
 
-from reporemedy.catalog import propose_fixed
-from reporemedy.context import load_context
-from reporemedy.errors import RemedyError
-from reporemedy.github import GitHub
-from reporemedy.models import Change, Context, Finding, RepositoryFile
-from reporemedy.preview import body, prepare, write_preview
-from reporemedy.readers.scorecard import read_scorecard
+from shadowreporemedy.catalog import propose_fixed
+from shadowreporemedy.context import load_context
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.github import GitHub
+from shadowreporemedy.models import Change, Context, Finding, RepositoryFile
+from shadowreporemedy.preview import body, prepare, write_preview
+from shadowreporemedy.readers.scorecard import read_scorecard
 
 
 def context(**updates):
@@ -164,7 +164,7 @@ def test_context_fetches_immutable_regular_guidelines_only():
 
 @pytest.mark.parametrize("status", [301, 401, 403, 404, 409, 422, 429, 500])
 def test_github_errors_do_not_leak_response_or_credentials(status, monkeypatch):
-    monkeypatch.setattr("reporemedy.github.time.sleep", lambda _: None)
+    monkeypatch.setattr("shadowreporemedy.github.time.sleep", lambda _: None)
     github = GitHub(
         "secret",
         transport=httpx.MockTransport(lambda r: httpx.Response(status, json={"message": "secret"})),

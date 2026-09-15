@@ -3,12 +3,12 @@ from pathlib import Path
 
 import pytest
 
-from reporemedy.cli import main
-from reporemedy.errors import RemedyError
-from reporemedy.models import ReportType, repository_name
-from reporemedy.readers import read_report
-from reporemedy.readers.repoauditor import read_repoauditor
-from reporemedy.readers.scorecard import read_scorecard
+from shadowreporemedy.cli import main
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.models import ReportType, repository_name
+from shadowreporemedy.readers import read_report
+from shadowreporemedy.readers.repoauditor import read_repoauditor
+from shadowreporemedy.readers.scorecard import read_scorecard
 
 
 def scorecard(score=0):

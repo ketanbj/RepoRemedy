@@ -4,13 +4,13 @@ import httpx
 import pytest
 from test_remedies import context
 
-from reporemedy.errors import RemedyError
-from reporemedy.feedback import collect_feedback
-from reporemedy.github import GitHub
-from reporemedy.preview import prepare, write_preview
-from reporemedy.publish import marker, publish, validate_run
-from reporemedy.readers.scorecard import read_scorecard
-from reporemedy.storage import read_run, run_lock
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.feedback import collect_feedback
+from shadowreporemedy.github import GitHub
+from shadowreporemedy.preview import prepare, write_preview
+from shadowreporemedy.publish import marker, publish, validate_run
+from shadowreporemedy.readers.scorecard import read_scorecard
+from shadowreporemedy.storage import read_run, run_lock
 
 
 def make_run(tmp_path, key="Security-Policy"):
@@ -160,10 +160,20 @@ def test_exclusive_lock_and_invalid_run(tmp_path):
     "kind,closed,merged,association,comment,expected",
     [
         ("issue", True, False, "OWNER", "Thank you", "closed-without-decision"),
+        ("issue", False, False, "OWNER", "shadowreporemedy: accepted", "accepted"),
+        ("issue", False, False, "OWNER", "shadowRepoRemedy: accepted", "accepted"),
         ("issue", False, False, "OWNER", "reporemedy: accepted", "accepted"),
-        ("issue", False, False, "NONE", "reporemedy: accepted", "pending"),
+        ("issue", False, False, "MEMBER", "reporemedy: declined", "declined"),
+        ("issue", False, False, "NONE", "shadowreporemedy: accepted", "pending"),
         ("pr", True, True, "NONE", "", "accepted"),
-        ("pr", False, False, "COLLABORATOR", "reporemedy: needs-adjustment", "needs-adjustment"),
+        (
+            "pr",
+            False,
+            False,
+            "COLLABORATOR",
+            "shadowreporemedy: needs-adjustment",
+            "needs-adjustment",
+        ),
     ],
 )
 def test_feedback_acceptance_is_evidence_based(

@@ -9,9 +9,9 @@ from urllib.parse import urlsplit
 import httpx
 from pydantic import Field, ValidationError
 
-from reporemedy.catalog import proposal_id, propose_fixed
-from reporemedy.errors import RemedyError
-from reporemedy.models import Change, Context, Contract, Finding, Mode, Outcome, Proposal
+from shadowreporemedy.catalog import proposal_id, propose_fixed
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.models import Change, Context, Contract, Finding, Mode, Outcome, Proposal
 
 
 class ModelChange(Contract):

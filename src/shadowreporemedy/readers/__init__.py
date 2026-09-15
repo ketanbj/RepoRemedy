@@ -3,10 +3,10 @@
 import hashlib
 from pathlib import Path
 
-from reporemedy.errors import RemedyError
-from reporemedy.models import Report, ReportType, repository_name
-from reporemedy.readers.repoauditor import read_repoauditor
-from reporemedy.readers.scorecard import read_scorecard
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.models import Report, ReportType, repository_name
+from shadowreporemedy.readers.repoauditor import read_repoauditor
+from shadowreporemedy.readers.scorecard import read_scorecard
 
 MAX_REPORT_BYTES = 20 * 1024 * 1024
 
