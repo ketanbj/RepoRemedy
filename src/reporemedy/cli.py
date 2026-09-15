@@ -13,7 +13,9 @@ from reporemedy.github import GitHub
 from reporemedy.models import Mode, ReportType
 from reporemedy.preview import prepare, write_preview
 from reporemedy.providers import ModelProvider
+from reporemedy.publish import publish, validate_run
 from reporemedy.readers import read_report
+from reporemedy.storage import read_run
 
 app = typer.Typer(
     help="Turn audit reports into improvements.",
@@ -74,6 +76,41 @@ def preview_report(
         github.close()
         if provider:
             provider.close()
+
+
+@app.command("publish")
+def publish_proposals(
+    directory: Path,
+    select: Annotated[str, typer.Option(help="Comma-separated proposal IDs from the preview")],
+    yes: Annotated[
+        bool, typer.Option("--yes", help="Confirm publication non-interactively")
+    ] = False,
+) -> None:
+    """Publish only selected proposals after review."""
+    load_environment()
+    github = GitHub(github_token())
+    try:
+        run = read_run(directory)
+        selected = [s.strip() for s in select.split(",")]
+        for proposal in validate_run(run, selected):
+            print(f"{run.repository}: {proposal.id} {proposal.action} — {proposal.title}")
+        if not yes:
+            try:
+                confirmed = input("Publish these selected proposals to GitHub? [y/N] ")
+            except EOFError:
+                confirmed = ""
+            if confirmed.lower() not in {"y", "yes"}:
+                print("Cancelled. Nothing published.")
+                return
+        receipts = publish(directory, selected, github)
+        for receipt in receipts:
+            print(
+                f"{receipt['id']}: {receipt['status']} "
+                f"{receipt.get('url', receipt.get('error', ''))}"
+            )
+        raise typer.Exit(1 if any(r["status"] == "failed" for r in receipts) else 0)
+    finally:
+        github.close()
 
 
 def main(argv: list[str] | None = None) -> int:
