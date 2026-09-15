@@ -10,8 +10,9 @@ from reporemedy.config import github_token, load_environment
 from reporemedy.context import load_context
 from reporemedy.errors import RemedyError
 from reporemedy.github import GitHub
-from reporemedy.models import ReportType
+from reporemedy.models import Mode, ReportType
 from reporemedy.preview import prepare, write_preview
+from reporemedy.providers import ModelProvider
 from reporemedy.readers import read_report
 
 app = typer.Typer(
@@ -53,19 +54,26 @@ def preview_report(
     repo: Annotated[str, typer.Option(help="OWNER/REPO or GitHub URL")],
     report_type: Annotated[ReportType, typer.Option(help="Input report format")],
     out: Annotated[Path, typer.Option(help="Preview output directory")] = Path("runs/preview"),
+    mode: Annotated[Mode, typer.Option(help="Remediation mode")] = Mode.FIXED,
+    limit: Annotated[int, typer.Option(help="Maximum remedies/model calls")] = 3,
 ) -> None:
     """Prepare proposals and diffs without publishing."""
     result = read_report(report, report_type, repo)
     load_environment()
+    if not 1 <= limit <= 25:
+        raise RemedyError("--limit must be between 1 and 25")
+    provider = ModelProvider(mode) if mode != Mode.FIXED else None
     github = GitHub(github_token())
     try:
         context = load_context(github, result.repository)
-        run = prepare(result, context)
+        run = prepare(result, context, mode, provider, limit)
         write_preview(run, out)
         print(f"{run.repository}: {len(run.proposals)} proposals, {len(run.outcomes)} findings")
         print(f"Review {out / 'README.md'} and the .patch files. Nothing published.")
     finally:
         github.close()
+        if provider:
+            provider.close()
 
 
 def main(argv: list[str] | None = None) -> int:

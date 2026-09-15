@@ -6,13 +6,50 @@ from pathlib import Path
 from reporemedy.catalog import propose_fixed
 from reporemedy.errors import RemedyError
 from reporemedy.models import Context, Mode, Outcome, Proposal, Report, Run
+from reporemedy.providers import ModelProvider
 
 
-def prepare(report: Report, context: Context) -> Run:
+def prepare(
+    report: Report,
+    context: Context,
+    mode: Mode = Mode.FIXED,
+    provider: ModelProvider | None = None,
+    limit: int = 3,
+) -> Run:
     proposals: list[Proposal] = []
     outcomes: list[Outcome] = []
-    for finding in report.findings:
-        result = propose_fixed(finding, context)
+    if report.repository.casefold() != context.repository.casefold():
+        raise RemedyError("Report and context repository mismatch")
+    if mode != Mode.FIXED and provider is None:
+        raise RemedyError("Selected mode needs a configured model provider")
+    priority = {
+        "SecurityPolicy": 0,
+        "Security-Policy": 0,
+        "DependabotSecurityUpdates": 1,
+        "Branch-Protection": 2,
+        "Protected": 2,
+    }
+    calls = 0
+    for finding in sorted(report.findings, key=lambda f: priority.get(f.key, 3)):
+        if calls >= limit and (mode != Mode.FIXED or finding.key in priority):
+            outcomes.append(
+                Outcome(
+                    finding=finding.key,
+                    status="skipped",
+                    message="Run limit reached; increase --limit to include more findings.",
+                )
+            )
+            continue
+        try:
+            result = (
+                provider.propose(finding, context) if provider else propose_fixed(finding, context)
+            )
+            if mode != Mode.FIXED and finding.status != "unavailable":
+                calls += 1
+        except RemedyError as exc:
+            calls += 1
+            outcomes.append(Outcome(finding=finding.key, status="failed", message=str(exc)))
+            continue
         if isinstance(result, Proposal):
             if any(p.id == result.id for p in proposals):
                 outcomes.append(
@@ -24,6 +61,8 @@ def prepare(report: Report, context: Context) -> Run:
                 )
                 continue
             proposals.append(result)
+            if mode == Mode.FIXED:
+                calls += 1
             outcomes.append(
                 Outcome(
                     finding=finding.key,
@@ -41,7 +80,7 @@ def prepare(report: Report, context: Context) -> Run:
         )
     return Run(
         repository=report.repository,
-        mode=Mode.FIXED,
+        mode=mode,
         report=report,
         default_branch=context.default_branch,
         base_commit=context.commit,

@@ -2,11 +2,14 @@ import json
 
 import httpx
 import pytest
+from test_readers import scorecard
 from test_remedies import context, finding
 
 from reporemedy.errors import RemedyError
 from reporemedy.models import Change, Mode, RepositoryFile
+from reporemedy.preview import prepare
 from reporemedy.providers import ModelProvider, redact, validate_proposal
+from reporemedy.readers.scorecard import read_scorecard
 
 
 def response():
@@ -101,6 +104,17 @@ def test_explicit_non_proposal_status(monkeypatch, status):
     model, _ = provider(monkeypatch, output={"status": status, "reason": "Need project decision"})
     try:
         assert model.propose(finding(), context()).status == status
+    finally:
+        model.close()
+
+
+def test_invalid_model_output_isolated_in_run(monkeypatch):
+    model, _ = provider(monkeypatch, output={"oops": "not a proposal"})
+    try:
+        report = read_scorecard(json.dumps(scorecard()), "acme/demo", "digest")
+        run = prepare(report, context(), Mode.LOCAL, model)
+        assert run.proposals == []
+        assert run.outcomes[0].status == "failed"
     finally:
         model.close()
 
