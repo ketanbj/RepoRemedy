@@ -1,0 +1,640 @@
+{
+  "schema_version": 1,
+  "publication": "none; preview only",
+  "batches": [
+    {
+      "mode": "non-llm",
+      "repositories": 10,
+      "totals": {
+        "proposed": 17,
+        "unsupported": 81,
+        "skipped": 21
+      },
+      "items": [
+        {
+          "repository": "poloclub/transformer-explainer",
+          "mode": "non-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "7a23a7a51cacec745e899bdd9ae8f73c2335e55b68608a7c1ea472a440535f75",
+          "base_commit": "bfe50afba10b9b560b84143ee1107d977defa74f",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "unsupported": 9,
+            "skipped": 2
+          },
+          "rejected": []
+        },
+        {
+          "repository": "borglab/gtsam",
+          "mode": "non-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "24ac2726e397db86edeff557b8d57b73e40d9fe7edc53ba086c69fca1be37989",
+          "base_commit": "bad30c55c881a67601c931c95a3742636b7c2821",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "unsupported": 8,
+            "skipped": 1
+          },
+          "rejected": []
+        },
+        {
+          "repository": "vortexgpgpu/vortex",
+          "mode": "non-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "2309dac84a83912d6c81fbe723af87ae75fe624268167499918a6be83dae10ba",
+          "base_commit": "1cd71c4023e9fbc3f635fb3cae924722b9808f67",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "unsupported": 8,
+            "skipped": 2
+          },
+          "rejected": []
+        },
+        {
+          "repository": "gt-tinker/qwerty",
+          "mode": "non-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "b0f417224cd7da732c4f21543c9460864ef03f6694d12bbb20e7a7d7daefba0c",
+          "base_commit": "c5f1e6570be55fe23b84136470bfad1992cb8334",
+          "actions": {
+            "setting": 1
+          },
+          "outcomes": {
+            "skipped": 2,
+            "proposed": 1,
+            "unsupported": 10
+          },
+          "rejected": []
+        },
+        {
+          "repository": "apache/airavata-custos",
+          "mode": "non-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "6b91f903f97603de8061b925d9e38ef2fbd056baeb9072a1c1f10c3fe4af1101",
+          "base_commit": "ad8a21f6e028bf794dd1ac5c84e346383e2aa0e5",
+          "actions": {
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 1,
+            "unsupported": 8,
+            "skipped": 2
+          },
+          "rejected": []
+        },
+        {
+          "repository": "AI2Science/vizfold-foundation",
+          "mode": "non-llm",
+          "model_name": null,
+          "report_type": "repoauditor",
+          "report_version": "Display.py@c682a78",
+          "report_sha256": "b3120b7ee09315a18db87f92c16794910c3ab6fa938ef8eb694d597efad88f28",
+          "base_commit": "745229dcb0b7eb5ed06ebf6678e99eded418b543",
+          "actions": {
+            "add-file": 1
+          },
+          "outcomes": {
+            "proposed": 1,
+            "unsupported": 5
+          },
+          "rejected": []
+        },
+        {
+          "repository": "psi4/psi4",
+          "mode": "non-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "894b813a6b00ae14eccaba9a8c6f03a3bb72df65cea0c7463cca1dd9f29b4c17",
+          "base_commit": "1fb8968fe95e6f8c3c17b94ddd3b277e83965d67",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "unsupported": 7,
+            "skipped": 2
+          },
+          "rejected": []
+        },
+        {
+          "repository": "MolSSI/QCSchema",
+          "mode": "non-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "cceb85d96c8149889d453a17420b8661e180ab2d0d5a1e1df58ac1fe8d4898fc",
+          "base_commit": "5390e6f11d21847e4e7ca2ad14a97594f957cb2d",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "unsupported": 9,
+            "skipped": 2
+          },
+          "rejected": []
+        },
+        {
+          "repository": "slimgroup/InvertibleNetworks.jl",
+          "mode": "non-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "f73ffce994a4aee44e66b43420b0eeee06c635268863a76abcfe7f3d9590aa5e",
+          "base_commit": "f3c9b027eb780fb182cd547c4ebbe45dfa88d016",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "unsupported": 9,
+            "skipped": 2
+          },
+          "rejected": []
+        },
+        {
+          "repository": "sharc-lab/Edge-MoE",
+          "mode": "non-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "823d63c6f1df3856fd72febd7ac4fbb9692f55fbd0b1dfa91f8fe1b700de783f",
+          "base_commit": "984b23bd7e733335213f3a33eac6a3947872973f",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "skipped": 6,
+            "unsupported": 8
+          },
+          "rejected": []
+        }
+      ]
+    },
+    {
+      "mode": "local-llm",
+      "repositories": 10,
+      "totals": {
+        "proposed": 20,
+        "failed": 7,
+        "skipped": 89,
+        "needs-input": 3
+      },
+      "items": [
+        {
+          "repository": "poloclub/transformer-explainer",
+          "mode": "local-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "7a23a7a51cacec745e899bdd9ae8f73c2335e55b68608a7c1ea472a440535f75",
+          "base_commit": "bfe50afba10b9b560b84143ee1107d977defa74f",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "failed": 1,
+            "skipped": 10
+          },
+          "rejected": [
+            {
+              "finding": "CI-Tests",
+              "reason": "Model proposed a new file outside the initial documentation scope"
+            }
+          ]
+        },
+        {
+          "repository": "borglab/gtsam",
+          "mode": "local-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "24ac2726e397db86edeff557b8d57b73e40d9fe7edc53ba086c69fca1be37989",
+          "base_commit": "bad30c55c881a67601c931c95a3742636b7c2821",
+          "actions": {
+            "add-file": 2,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 3,
+            "skipped": 8
+          },
+          "rejected": []
+        },
+        {
+          "repository": "vortexgpgpu/vortex",
+          "mode": "local-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "2309dac84a83912d6c81fbe723af87ae75fe624268167499918a6be83dae10ba",
+          "base_commit": "1cd71c4023e9fbc3f635fb3cae924722b9808f67",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "needs-input": 1,
+            "skipped": 9
+          },
+          "rejected": []
+        },
+        {
+          "repository": "gt-tinker/qwerty",
+          "mode": "local-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "b0f417224cd7da732c4f21543c9460864ef03f6694d12bbb20e7a7d7daefba0c",
+          "base_commit": "c5f1e6570be55fe23b84136470bfad1992cb8334",
+          "actions": {
+            "setting": 1
+          },
+          "outcomes": {
+            "failed": 2,
+            "proposed": 1,
+            "skipped": 10
+          },
+          "rejected": [
+            {
+              "finding": "Security-Policy",
+              "reason": "Proposed file change has no effect"
+            },
+            {
+              "finding": "CI-Tests",
+              "reason": "File action does not match the existing/new file state"
+            }
+          ]
+        },
+        {
+          "repository": "apache/airavata-custos",
+          "mode": "local-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "6b91f903f97603de8061b925d9e38ef2fbd056baeb9072a1c1f10c3fe4af1101",
+          "base_commit": "ad8a21f6e028bf794dd1ac5c84e346383e2aa0e5",
+          "actions": {
+            "setting": 1,
+            "add-file": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "failed": 1,
+            "skipped": 8
+          },
+          "rejected": [
+            {
+              "finding": "CI-Tests",
+              "reason": "Model declared a proposal but did not provide one"
+            }
+          ]
+        },
+        {
+          "repository": "AI2Science/vizfold-foundation",
+          "mode": "local-llm",
+          "model_name": null,
+          "report_type": "repoauditor",
+          "report_version": "Display.py@c682a78",
+          "report_sha256": "b3120b7ee09315a18db87f92c16794910c3ab6fa938ef8eb694d597efad88f28",
+          "base_commit": "745229dcb0b7eb5ed06ebf6678e99eded418b543",
+          "actions": {
+            "add-file": 1
+          },
+          "outcomes": {
+            "proposed": 1,
+            "failed": 2,
+            "skipped": 3
+          },
+          "rejected": [
+            {
+              "finding": "CodeOfConduct",
+              "reason": "Model proposed a new file outside the initial documentation scope"
+            },
+            {
+              "finding": "Contributing",
+              "reason": "Model proposed a new file outside the initial documentation scope"
+            }
+          ]
+        },
+        {
+          "repository": "psi4/psi4",
+          "mode": "local-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "894b813a6b00ae14eccaba9a8c6f03a3bb72df65cea0c7463cca1dd9f29b4c17",
+          "base_commit": "1fb8968fe95e6f8c3c17b94ddd3b277e83965d67",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "needs-input": 1,
+            "skipped": 8
+          },
+          "rejected": []
+        },
+        {
+          "repository": "MolSSI/QCSchema",
+          "mode": "local-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "cceb85d96c8149889d453a17420b8661e180ab2d0d5a1e1df58ac1fe8d4898fc",
+          "base_commit": "5390e6f11d21847e4e7ca2ad14a97594f957cb2d",
+          "actions": {
+            "add-file": 2,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 3,
+            "skipped": 10
+          },
+          "rejected": []
+        },
+        {
+          "repository": "slimgroup/InvertibleNetworks.jl",
+          "mode": "local-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "f73ffce994a4aee44e66b43420b0eeee06c635268863a76abcfe7f3d9590aa5e",
+          "base_commit": "f3c9b027eb780fb182cd547c4ebbe45dfa88d016",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "needs-input": 1,
+            "skipped": 10
+          },
+          "rejected": []
+        },
+        {
+          "repository": "sharc-lab/Edge-MoE",
+          "mode": "local-llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "823d63c6f1df3856fd72febd7ac4fbb9692f55fbd0b1dfa91f8fe1b700de783f",
+          "base_commit": "984b23bd7e733335213f3a33eac6a3947872973f",
+          "actions": {
+            "add-file": 1,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "skipped": 13,
+            "failed": 1
+          },
+          "rejected": [
+            {
+              "finding": "CII-Best-Practices",
+              "reason": "Model response violates the proposal schema; review context or try another model"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "llm",
+      "repositories": 10,
+      "totals": {
+        "proposed": 25,
+        "skipped": 89,
+        "needs-input": 3,
+        "failed": 2
+      },
+      "items": [
+        {
+          "repository": "poloclub/transformer-explainer",
+          "mode": "llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "7a23a7a51cacec745e899bdd9ae8f73c2335e55b68608a7c1ea472a440535f75",
+          "base_commit": "bfe50afba10b9b560b84143ee1107d977defa74f",
+          "actions": {
+            "add-file": 2,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 3,
+            "skipped": 10
+          },
+          "rejected": []
+        },
+        {
+          "repository": "borglab/gtsam",
+          "mode": "llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "24ac2726e397db86edeff557b8d57b73e40d9fe7edc53ba086c69fca1be37989",
+          "base_commit": "bad30c55c881a67601c931c95a3742636b7c2821",
+          "actions": {
+            "setting": 1,
+            "add-file": 1
+          },
+          "outcomes": {
+            "needs-input": 1,
+            "proposed": 2,
+            "skipped": 8
+          },
+          "rejected": []
+        },
+        {
+          "repository": "vortexgpgpu/vortex",
+          "mode": "llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "2309dac84a83912d6c81fbe723af87ae75fe624268167499918a6be83dae10ba",
+          "base_commit": "1cd71c4023e9fbc3f635fb3cae924722b9808f67",
+          "actions": {
+            "add-file": 1,
+            "setting": 1,
+            "edit-file": 1
+          },
+          "outcomes": {
+            "proposed": 3,
+            "skipped": 9
+          },
+          "rejected": []
+        },
+        {
+          "repository": "gt-tinker/qwerty",
+          "mode": "llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "b0f417224cd7da732c4f21543c9460864ef03f6694d12bbb20e7a7d7daefba0c",
+          "base_commit": "c5f1e6570be55fe23b84136470bfad1992cb8334",
+          "actions": {
+            "edit-file": 1,
+            "setting": 2
+          },
+          "outcomes": {
+            "proposed": 3,
+            "skipped": 10
+          },
+          "rejected": []
+        },
+        {
+          "repository": "apache/airavata-custos",
+          "mode": "llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "6b91f903f97603de8061b925d9e38ef2fbd056baeb9072a1c1f10c3fe4af1101",
+          "base_commit": "ad8a21f6e028bf794dd1ac5c84e346383e2aa0e5",
+          "actions": {
+            "setting": 1,
+            "edit-file": 1
+          },
+          "outcomes": {
+            "proposed": 2,
+            "failed": 1,
+            "skipped": 8
+          },
+          "rejected": [
+            {
+              "finding": "CII-Best-Practices",
+              "reason": "Model request failed; check endpoint, model access and server health"
+            }
+          ]
+        },
+        {
+          "repository": "AI2Science/vizfold-foundation",
+          "mode": "llm",
+          "model_name": null,
+          "report_type": "repoauditor",
+          "report_version": "Display.py@c682a78",
+          "report_sha256": "b3120b7ee09315a18db87f92c16794910c3ab6fa938ef8eb694d597efad88f28",
+          "base_commit": "745229dcb0b7eb5ed06ebf6678e99eded418b543",
+          "actions": {
+            "add-file": 2
+          },
+          "outcomes": {
+            "proposed": 2,
+            "failed": 1,
+            "skipped": 3
+          },
+          "rejected": [
+            {
+              "finding": "CodeOfConduct",
+              "reason": "Model proposed a new file outside the initial documentation scope"
+            }
+          ]
+        },
+        {
+          "repository": "psi4/psi4",
+          "mode": "llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "894b813a6b00ae14eccaba9a8c6f03a3bb72df65cea0c7463cca1dd9f29b4c17",
+          "base_commit": "1fb8968fe95e6f8c3c17b94ddd3b277e83965d67",
+          "actions": {
+            "add-file": 2,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 3,
+            "skipped": 8
+          },
+          "rejected": []
+        },
+        {
+          "repository": "MolSSI/QCSchema",
+          "mode": "llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "cceb85d96c8149889d453a17420b8661e180ab2d0d5a1e1df58ac1fe8d4898fc",
+          "base_commit": "5390e6f11d21847e4e7ca2ad14a97594f957cb2d",
+          "actions": {
+            "add-file": 2,
+            "setting": 1
+          },
+          "outcomes": {
+            "proposed": 3,
+            "skipped": 10
+          },
+          "rejected": []
+        },
+        {
+          "repository": "slimgroup/InvertibleNetworks.jl",
+          "mode": "llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "f73ffce994a4aee44e66b43420b0eeee06c635268863a76abcfe7f3d9590aa5e",
+          "base_commit": "f3c9b027eb780fb182cd547c4ebbe45dfa88d016",
+          "actions": {
+            "setting": 2
+          },
+          "outcomes": {
+            "needs-input": 1,
+            "proposed": 2,
+            "skipped": 10
+          },
+          "rejected": []
+        },
+        {
+          "repository": "sharc-lab/Edge-MoE",
+          "mode": "llm",
+          "model_name": null,
+          "report_type": "ossf-scorecard",
+          "report_version": "v5.5.0",
+          "report_sha256": "823d63c6f1df3856fd72febd7ac4fbb9692f55fbd0b1dfa91f8fe1b700de783f",
+          "base_commit": "984b23bd7e733335213f3a33eac6a3947872973f",
+          "actions": {
+            "setting": 1,
+            "add-file": 1
+          },
+          "outcomes": {
+            "needs-input": 1,
+            "proposed": 2,
+            "skipped": 13
+          },
+          "rejected": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "repo": {"name": "github.com/acme/demo"},
+  "scorecard": {"version": "v5.5.0"},
+  "checks": [
+    {"name": "Security-Policy", "score": 0, "reason": "Synthetic example: security policy missing"},
+    {"name": "Branch-Protection", "score": 0, "reason": "Synthetic example: no branch protection"},
+    {"name": "License", "score": 10, "reason": "Synthetic example: license detected"}
+  ]
+}
