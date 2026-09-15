@@ -9,15 +9,15 @@ from test_publication import Server, make_run
 from test_readers import scorecard
 from test_remedies import context
 
-from reporemedy import config
-from reporemedy.context import load_context
-from reporemedy.errors import RemedyError
-from reporemedy.github import GitHub
-from reporemedy.models import Mode, ReportType
-from reporemedy.preview import prepare
-from reporemedy.providers import ModelProvider
-from reporemedy.readers import read_report
-from reporemedy.readers.scorecard import read_scorecard
+from shadowreporemedy import config
+from shadowreporemedy.context import load_context
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.github import GitHub
+from shadowreporemedy.models import Mode, ReportType
+from shadowreporemedy.preview import prepare
+from shadowreporemedy.providers import ModelProvider
+from shadowreporemedy.readers import read_report
+from shadowreporemedy.readers.scorecard import read_scorecard
 
 
 def test_config_precedence_and_no_interpolation(tmp_path, monkeypatch):
@@ -48,7 +48,7 @@ def test_gh_auth_fallback(monkeypatch, outcome):
 
 
 def test_transport_read_retries_but_write_does_not(monkeypatch):
-    monkeypatch.setattr("reporemedy.github.time.sleep", lambda _: None)
+    monkeypatch.setattr("shadowreporemedy.github.time.sleep", lambda _: None)
     calls = []
 
     def handler(request):
@@ -186,7 +186,7 @@ def test_invalid_provider_config_fails_before_network(monkeypatch, env):
 
 
 def test_publication_failure_is_recorded_and_lock_released(tmp_path):
-    from reporemedy.publish import publish
+    from shadowreporemedy.publish import publish
 
     run, out = make_run(tmp_path, "Branch-Protection")
     server = Server()
@@ -207,7 +207,7 @@ def test_publication_failure_is_recorded_and_lock_released(tmp_path):
 
 
 def test_draft_branch_resume_and_tampered_branch_rejection(tmp_path):
-    from reporemedy.publish import publish
+    from shadowreporemedy.publish import publish
 
     run, out = make_run(tmp_path)
     server = Server()
@@ -240,9 +240,9 @@ def test_draft_branch_resume_and_tampered_branch_rejection(tmp_path):
 
 
 def test_fork_creation_polling_and_name_collision(monkeypatch):
-    from reporemedy.publish import writable_repository
+    from shadowreporemedy.publish import writable_repository
 
-    monkeypatch.setattr("reporemedy.publish.time.sleep", lambda _: None)
+    monkeypatch.setattr("shadowreporemedy.publish.time.sleep", lambda _: None)
     calls = []
     ready = False
 
@@ -282,9 +282,9 @@ def test_fork_creation_polling_and_name_collision(monkeypatch):
 def test_forged_or_changed_original_file_is_rejected():
     from test_remedies import finding
 
-    from reporemedy.catalog import security
-    from reporemedy.models import RepositoryFile
-    from reporemedy.publish import verify_changes
+    from shadowreporemedy.catalog import security
+    from shadowreporemedy.models import RepositoryFile
+    from shadowreporemedy.publish import verify_changes
 
     ctx = context(
         paths=["SECURITY.md"], files={"SECURITY.md": RepositoryFile(content="", sha="old")}
@@ -299,7 +299,7 @@ def test_forged_or_changed_original_file_is_rejected():
 
 
 def test_limits_duplicates_and_mismatched_context(tmp_path):
-    from reporemedy.models import Finding
+    from shadowreporemedy.models import Finding
 
     run, _ = make_run(tmp_path)
     report = run.report
@@ -354,8 +354,8 @@ def test_context_fails_explicitly_on_incomplete_inputs(problem):
 
 
 def test_generation_schema_preserves_named_properties_and_bounds_are_enforced():
-    from reporemedy.models import Change
-    from reporemedy.providers import generation_schema
+    from shadowreporemedy.models import Change
+    from shadowreporemedy.providers import generation_schema
 
     schema = generation_schema()
     assert "title" in schema["$defs"]["Draft"]["properties"]

@@ -5,7 +5,7 @@ from pathlib import Path
 
 def test_standalone_boundary_has_no_upstream_auditor_dependency():
     banned = {"repoauditor", "scorecard"}
-    for path in Path("src/reporemedy").rglob("*.py"):
+    for path in Path("src/shadowreporemedy").rglob("*.py"):
         tree = ast.parse(path.read_text(encoding="utf-8"))
         for node in ast.walk(tree):
             modules = (
@@ -16,13 +16,13 @@ def test_standalone_boundary_has_no_upstream_auditor_dependency():
                 else []
             )
             assert not any(m.split(".")[0].lower() in banned for m in modules), path
-    requirements = importlib.metadata.requires("reporemedy") or []
+    requirements = importlib.metadata.requires("shadowreporemedy") or []
     assert not any(r.lower().startswith(tuple(banned)) for r in requirements)
 
 
 def test_domain_contract_does_not_depend_on_io_layers():
-    tree = ast.parse(Path("src/reporemedy/models.py").read_text(encoding="utf-8"))
-    forbidden = {"httpx", "subprocess", "reporemedy.github", "reporemedy.providers"}
+    tree = ast.parse(Path("src/shadowreporemedy/models.py").read_text(encoding="utf-8"))
+    forbidden = {"httpx", "subprocess", "shadowreporemedy.github", "shadowreporemedy.providers"}
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             assert not forbidden.intersection(n.name for n in node.names)

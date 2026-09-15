@@ -11,7 +11,7 @@ from check_pr_size import changed_lines, main
 class SizeTests(unittest.TestCase):
     def test_additions_and_deletions_count_with_tests_and_configuration(self):
         data = (
-            "200\t80\tsrc/reporemedy/cli.py\0"
+            "200\t80\tsrc/shadowreporemedy/cli.py\0"
             "100\t20\ttests/test_cli.py\0"
             "30\t5\t.github/workflows/ci.yml\0"
             "10\t2\tpyproject.toml\0"

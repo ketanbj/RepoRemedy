@@ -1,6 +1,6 @@
 # Auditor batches and independent maintainer use
 
-Use `reporemedy batch batch.json --out runs/pilot` for 5–10 repositories. A batch
+Use `shadowRepoRemedy batch batch.json --out runs/pilot` for 5–10 repositories. A batch
 accepts 1–10 entries with `repository`, `report`, and explicit `report_type` fields.
 See [the example](../examples/batch.json). Report paths are relative to the manifest,
 not the working directory. Each entry can use a different report type; the batch's
@@ -14,9 +14,9 @@ and 0 for completed runs; unsupported or needs-input outcomes remain explicit.
 No batch command publishes changes. Select proposals from each child directory:
 
 ```sh
-reporemedy batch batch.json --out runs/pilot --mode non-llm
-reporemedy publish runs/pilot/01-OWNER--REPO --select PROPOSAL_ID
-reporemedy feedback runs/pilot/01-OWNER--REPO
+shadowRepoRemedy batch batch.json --out runs/pilot --mode non-llm
+shadowRepoRemedy publish runs/pilot/01-OWNER--REPO --select PROPOSAL_ID
+shadowRepoRemedy feedback runs/pilot/01-OWNER--REPO
 ```
 
 A maintainer working independently uses `preview` on their own report, then the

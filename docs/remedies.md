@@ -287,5 +287,5 @@ definitions change; keep unknown checks visible until reviewed.
 [scorecard-checks]: https://github.com/ossf/scorecard/blob/v5.5.0/docs/checks.md
 [upstream]: https://github.com/gt-ospo/oss-security-audit-tools/tree/8898da7a4970282924b3c5211370f1dddb5c45c4
 [helpers]: https://github.com/gt-ospo/oss-security-audit-tools/tree/8898da7a4970282924b3c5211370f1dddb5c45c4/automated_PRs
-[fixed-code]: https://github.com/ketanbj/RepoRemedy/blob/0c3d3fdb7c081fe29b1aef529dbe48e2624cacb5/src/reporemedy/catalog.py
-[fixed-pr]: https://github.com/ketanbj/RepoRemedy/pull/2
+[fixed-code]: https://github.com/ketanbj/shadowRepoRemedy/blob/0c3d3fdb7c081fe29b1aef529dbe48e2624cacb5/src/reporemedy/catalog.py
+[fixed-pr]: https://github.com/ketanbj/shadowRepoRemedy/pull/2

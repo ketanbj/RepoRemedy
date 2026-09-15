@@ -5,10 +5,10 @@ import pytest
 from test_publication import Server
 from test_readers import scorecard
 
-from reporemedy.batch import batch_preview
-from reporemedy.cli import main
-from reporemedy.errors import RemedyError
-from reporemedy.github import GitHub
+from shadowreporemedy.batch import batch_preview
+from shadowreporemedy.cli import main
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.github import GitHub
 
 
 def manifest(tmp_path, count=10):
@@ -74,10 +74,11 @@ def test_batch_scope_boundaries(tmp_path, data):
 def test_cli_batch_and_single_preview_and_cancellation(tmp_path, monkeypatch, capsys):
     server = Server()
     monkeypatch.setattr(
-        "reporemedy.cli.GitHub", lambda token: GitHub(token, transport=httpx.MockTransport(server))
+        "shadowreporemedy.cli.GitHub",
+        lambda token: GitHub(token, transport=httpx.MockTransport(server)),
     )
-    monkeypatch.setattr("reporemedy.cli.github_token", lambda: "test")
-    monkeypatch.setattr("reporemedy.cli.load_environment", lambda: None)
+    monkeypatch.setattr("shadowreporemedy.cli.github_token", lambda: "test")
+    monkeypatch.setattr("shadowreporemedy.cli.load_environment", lambda: None)
     path = manifest(tmp_path, 1)
     assert main(["batch", str(path), "--out", str(tmp_path / "batch")]) == 0
     out = tmp_path / "single"

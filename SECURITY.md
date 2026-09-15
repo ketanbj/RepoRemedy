@@ -6,5 +6,5 @@ report; a dedicated disclosure channel and response policy are not established y
 If GitHub private vulnerability reporting is enabled, use the repository's Security
 page to report privately. No response-time guarantee is made by this document.
 
-RepoRemedy is a review-first pilot tool. Do not merge proposed changes without
+shadowRepoRemedy is a review-first pilot tool. Do not merge proposed changes without
 project review. See `docs/architecture.md` for trust boundaries and known limitations.

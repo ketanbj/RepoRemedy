@@ -14,21 +14,21 @@ separately by the [size check](../scripts/check_pr_size.py).
 
 | Order | Week | PR | Internal stories | Review scope |
 | --- | --- | --- | --- | --- |
-| 1 | Supporting engineering | [#8](https://github.com/ketanbj/RepoRemedy/pull/8) | RR-304 | PR-size CI and contribution policy |
-| 2 | 1 | [#1](https://github.com/ketanbj/RepoRemedy/pull/1) | RR-102 | Installable reader library and common finding contracts |
-| 3 | 1 | [#9](https://github.com/ketanbj/RepoRemedy/pull/9) | RR-103 | Typer inspection CLI and command contracts |
-| 4 | 1 | [#10](https://github.com/ketanbj/RepoRemedy/pull/10) | RR-104 | GitHub transport, configuration and immutable context |
-| 5 | 1 | [#15](https://github.com/ketanbj/RepoRemedy/pull/15) | RR-105 | Source-linked potential remedy inventory; documentation only |
-| 6 | 1 | [#2](https://github.com/ketanbj/RepoRemedy/pull/2) | RR-105, RR-106 | Fixed catalog and self-contained preview artifacts |
-| 7 | 2 | [#11](https://github.com/ketanbj/RepoRemedy/pull/11) | RR-201 | Local Ollama and hosted HTTP adapters |
-| 8 | 2 | [#3](https://github.com/ketanbj/RepoRemedy/pull/3) | RR-202 | Mode selection, bounded previews and isolated model failures |
-| 9 | 2 | [#12](https://github.com/ketanbj/RepoRemedy/pull/12) | RR-204 | Publication engine, validation, locking and receipts |
-| 10 | 2 | [#4](https://github.com/ketanbj/RepoRemedy/pull/4) | RR-204 | Explicit selection and confirmation through the CLI |
-| 11 | 2 | [#13](https://github.com/ketanbj/RepoRemedy/pull/13) | RR-205 | Feedback collection and evidence-based decision classification |
-| 12 | 2 | [#5](https://github.com/ketanbj/RepoRemedy/pull/5) | RR-203 | Single/batch consistency and isolated per-repository outcomes |
-| 13 | 3 | [#6](https://github.com/ketanbj/RepoRemedy/pull/6) | RR-301, RR-303, RR-304 | Pilot-driven hardening, HTTP-fixture regressions and coverage gate |
-| 14 | 3 | [#14](https://github.com/ketanbj/RepoRemedy/pull/14) | RR-302 | Preview pilot results, provenance and reproduction helpers |
-| 15 | 3 | [#7](https://github.com/ketanbj/RepoRemedy/pull/7) | RR-101, RR-305, RR-306 | Scope documentation, installation guide and acceptance-gap handoff |
+| 1 | Supporting engineering | [#8](https://github.com/ketanbj/shadowRepoRemedy/pull/8) | RR-304 | PR-size CI and contribution policy |
+| 2 | 1 | [#1](https://github.com/ketanbj/shadowRepoRemedy/pull/1) | RR-102 | Installable reader library and common finding contracts |
+| 3 | 1 | [#9](https://github.com/ketanbj/shadowRepoRemedy/pull/9) | RR-103 | Typer inspection CLI and command contracts |
+| 4 | 1 | [#10](https://github.com/ketanbj/shadowRepoRemedy/pull/10) | RR-104 | GitHub transport, configuration and immutable context |
+| 5 | 1 | [#15](https://github.com/ketanbj/shadowRepoRemedy/pull/15) | RR-105 | Source-linked potential remedy inventory; documentation only |
+| 6 | 1 | [#2](https://github.com/ketanbj/shadowRepoRemedy/pull/2) | RR-105, RR-106 | Fixed catalog and self-contained preview artifacts |
+| 7 | 2 | [#11](https://github.com/ketanbj/shadowRepoRemedy/pull/11) | RR-201 | Local Ollama and hosted HTTP adapters |
+| 8 | 2 | [#3](https://github.com/ketanbj/shadowRepoRemedy/pull/3) | RR-202 | Mode selection, bounded previews and isolated model failures |
+| 9 | 2 | [#12](https://github.com/ketanbj/shadowRepoRemedy/pull/12) | RR-204 | Publication engine, validation, locking and receipts |
+| 10 | 2 | [#4](https://github.com/ketanbj/shadowRepoRemedy/pull/4) | RR-204 | Explicit selection and confirmation through the CLI |
+| 11 | 2 | [#13](https://github.com/ketanbj/shadowRepoRemedy/pull/13) | RR-205 | Feedback collection and evidence-based decision classification |
+| 12 | 2 | [#5](https://github.com/ketanbj/shadowRepoRemedy/pull/5) | RR-203 | Single/batch consistency and isolated per-repository outcomes |
+| 13 | 3 | [#6](https://github.com/ketanbj/shadowRepoRemedy/pull/6) | RR-301, RR-303, RR-304 | Pilot-driven hardening, HTTP-fixture regressions and coverage gate |
+| 14 | 3 | [#14](https://github.com/ketanbj/shadowRepoRemedy/pull/14) | RR-302 | Preview pilot results, provenance and reproduction helpers |
+| 15 | 3 | [#7](https://github.com/ketanbj/shadowRepoRemedy/pull/7) | RR-101, RR-305, RR-306 | Scope documentation, installation guide and acceptance-gap handoff |
 
 These PRs form a dependent stack. Merge in the order above: merge the first PR into
 main, retarget the next PR to main, then merge it. Do not merge an upper PR into its

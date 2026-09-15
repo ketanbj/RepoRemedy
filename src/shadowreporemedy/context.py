@@ -4,9 +4,9 @@ import base64
 from pathlib import PurePosixPath
 from urllib.parse import quote
 
-from reporemedy.errors import RemedyError
-from reporemedy.github import GitHub
-from reporemedy.models import Context, RepositoryFile, repository_name
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.github import GitHub
+from shadowreporemedy.models import Context, RepositoryFile, repository_name
 
 GUIDE_NAMES = {
     "readme.md",

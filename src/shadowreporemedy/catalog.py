@@ -3,7 +3,7 @@
 import hashlib
 from collections.abc import Callable
 
-from reporemedy.models import Change, Context, Finding, Outcome, Proposal
+from shadowreporemedy.models import Change, Context, Finding, Outcome, Proposal
 
 SECURITY_PATHS = (".github/SECURITY.md", "docs/SECURITY.md", "SECURITY.md")
 

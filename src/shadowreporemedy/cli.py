@@ -5,19 +5,19 @@ from typing import Annotated
 
 import typer
 
-from reporemedy import __version__
-from reporemedy.batch import batch_preview
-from reporemedy.config import github_token, load_environment
-from reporemedy.context import load_context
-from reporemedy.errors import RemedyError
-from reporemedy.feedback import collect_feedback
-from reporemedy.github import GitHub
-from reporemedy.models import Mode, ReportType
-from reporemedy.preview import prepare, write_preview
-from reporemedy.providers import ModelProvider
-from reporemedy.publish import publish, validate_run
-from reporemedy.readers import read_report
-from reporemedy.storage import read_run
+from shadowreporemedy import __version__
+from shadowreporemedy.batch import batch_preview
+from shadowreporemedy.config import github_token, load_environment
+from shadowreporemedy.context import load_context
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.feedback import collect_feedback
+from shadowreporemedy.github import GitHub
+from shadowreporemedy.models import Mode, ReportType
+from shadowreporemedy.preview import prepare, write_preview
+from shadowreporemedy.providers import ModelProvider
+from shadowreporemedy.publish import publish, validate_run
+from shadowreporemedy.readers import read_report
+from shadowreporemedy.storage import read_run
 
 app = typer.Typer(
     help="Turn audit reports into improvements.",
@@ -162,7 +162,7 @@ def batch(
 def main(argv: list[str] | None = None) -> int:
     """Run the CLI, retaining return codes for callers and errors on stderr."""
     try:
-        app(args=argv, prog_name="reporemedy")
+        app(args=argv, prog_name="shadowRepoRemedy")
     except SystemExit as exc:
         if isinstance(exc.code, int) and exc.code in (0, 1):
             return exc.code

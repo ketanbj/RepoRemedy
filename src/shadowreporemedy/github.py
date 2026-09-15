@@ -5,7 +5,7 @@ from typing import Any
 
 import httpx
 
-from reporemedy.errors import RemedyError
+from shadowreporemedy.errors import RemedyError
 
 
 class GitHub:
@@ -14,7 +14,7 @@ class GitHub:
         headers = {
             "Accept": "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",
-            "User-Agent": "RepoRemedy/0.1",
+            "User-Agent": "shadowRepoRemedy/0.1",
         }
         if token:
             headers["Authorization"] = f"Bearer {token}"

@@ -41,12 +41,12 @@ Protocol references: [Ollama chat](https://docs.ollama.com/api/chat),
 
 The pilot used `qwen2.5:3b` through Ollama 0.32.14 locally and
 `gpt-oss:120b-cloud` through the authenticated Ollama gateway for hosted calls.
-These are tested configurations, not model weights bundled with RepoRemedy.
+These are tested configurations, not model weights bundled with shadowRepoRemedy.
 Check the model's own license and deployment suitability (the
 [3B model has separate terms](https://ollama.com/library/qwen2.5:3b)).
 The saved run records the selected model name. Model output can vary across versions.
 
 Local generation uses a simplified structural schema compatible with Ollama's
 grammar compiler. Full length, path, original-content and action validation still
-runs in RepoRemedy after generation. Reviewed catalog responses are supplied as
+runs in shadowRepoRemedy after generation. Reviewed catalog responses are supplied as
 starting points where available; the model is consulted in both model modes.

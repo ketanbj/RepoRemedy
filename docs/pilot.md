@@ -110,13 +110,13 @@ Create an override file (use your actual absolute report path):
 {"VizFold": {"repository": "AI2Science/vizfold-foundation", "report": "/absolute/path/VizFold.txt", "report_type": "repoauditor"}}
 ```
 
-Then, from a RepoRemedy checkout:
+Then, from a shadowRepoRemedy checkout:
 
 ```sh
 uv run python scripts/prepare_pilot.py /path/to/GT_OSS_Repos_normalized.csv --scorecard-dir /path/to/oss-security-audit-tools/results/history --overrides overrides.json --out batch.json
-uv run reporemedy batch batch.json --mode non-llm --out runs/fixed
-uv run reporemedy batch batch.json --mode local-llm --out runs/local
-uv run reporemedy batch batch.json --mode llm --out runs/hosted
+uv run shadowRepoRemedy batch batch.json --mode non-llm --out runs/fixed
+uv run shadowRepoRemedy batch batch.json --mode local-llm --out runs/local
+uv run shadowRepoRemedy batch batch.json --mode llm --out runs/hosted
 uv run python scripts/summarize_pilot.py runs/fixed runs/local runs/hosted --out pilot-results.json
 ```
 

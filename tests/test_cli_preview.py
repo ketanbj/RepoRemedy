@@ -6,9 +6,9 @@ from test_providers import provider
 from test_readers import scorecard
 from test_remedies import context
 
-from reporemedy.cli import main
-from reporemedy.github import GitHub
-from reporemedy.models import Mode
+from shadowreporemedy.cli import main
+from shadowreporemedy.github import GitHub
+from shadowreporemedy.models import Mode
 
 
 @pytest.mark.parametrize("mode", [None, "non-llm", "local-llm", "llm"])
@@ -19,14 +19,14 @@ def test_preview_command_writes_review_artifacts_without_requests(
         pytest.fail(f"Preview unexpectedly sent {request.method} {request.url}")
 
     github = GitHub(transport=httpx.MockTransport(reject_request))
-    monkeypatch.setattr("reporemedy.cli.GitHub", lambda token: github)
-    monkeypatch.setattr("reporemedy.cli.github_token", lambda: None)
-    monkeypatch.setattr("reporemedy.cli.load_environment", lambda: None)
-    monkeypatch.setattr("reporemedy.cli.load_context", lambda *args: context())
+    monkeypatch.setattr("shadowreporemedy.cli.GitHub", lambda token: github)
+    monkeypatch.setattr("shadowreporemedy.cli.github_token", lambda: None)
+    monkeypatch.setattr("shadowreporemedy.cli.load_environment", lambda: None)
+    monkeypatch.setattr("shadowreporemedy.cli.load_context", lambda *args: context())
     model = None
     if mode in {"local-llm", "llm"}:
         model, _ = provider(monkeypatch, Mode(mode))
-        monkeypatch.setattr("reporemedy.cli.ModelProvider", lambda selected: model)
+        monkeypatch.setattr("shadowreporemedy.cli.ModelProvider", lambda selected: model)
     report = tmp_path / "report.json"
     report.write_text(json.dumps(scorecard()), encoding="utf-8")
     out = tmp_path / "review directory"
@@ -65,9 +65,9 @@ def test_invalid_preview_options_fail_before_network(tmp_path, monkeypatch, flag
     def reject(*args, **kwargs):
         pytest.fail("Invalid CLI options must not open network clients")
 
-    monkeypatch.setattr("reporemedy.cli.GitHub", reject)
-    monkeypatch.setattr("reporemedy.cli.ModelProvider", reject)
-    monkeypatch.setattr("reporemedy.cli.load_environment", lambda: None)
+    monkeypatch.setattr("shadowreporemedy.cli.GitHub", reject)
+    monkeypatch.setattr("shadowreporemedy.cli.ModelProvider", reject)
+    monkeypatch.setattr("shadowreporemedy.cli.load_environment", lambda: None)
     report = tmp_path / "report.json"
     report.write_text(json.dumps(scorecard()), encoding="utf-8")
     with pytest.raises(SystemExit) as error:

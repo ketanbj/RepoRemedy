@@ -7,14 +7,14 @@ from typing import Any
 
 from pydantic import field_validator
 
-from reporemedy.context import load_context
-from reporemedy.errors import RemedyError
-from reporemedy.github import GitHub
-from reporemedy.models import Contract, Mode, ReportType, repository_name
-from reporemedy.preview import prepare, write_preview
-from reporemedy.providers import ModelProvider
-from reporemedy.readers import read_report
-from reporemedy.storage import atomic_json
+from shadowreporemedy.context import load_context
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.github import GitHub
+from shadowreporemedy.models import Contract, Mode, ReportType, repository_name
+from shadowreporemedy.preview import prepare, write_preview
+from shadowreporemedy.providers import ModelProvider
+from shadowreporemedy.readers import read_report
+from shadowreporemedy.storage import atomic_json
 
 
 class BatchItem(Contract):

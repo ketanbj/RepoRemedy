@@ -4,8 +4,8 @@ import json
 import re
 from typing import Any
 
-from reporemedy.errors import RemedyError
-from reporemedy.models import Finding, Report, ReportType, repository_name
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.models import Finding, Report, ReportType, repository_name
 
 
 def read_scorecard(text: str, repository: str, digest: str) -> Report:

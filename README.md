@@ -1,4 +1,4 @@
-# RepoRemedy
+# shadowRepoRemedy
 
 Turn an existing repository audit into focused GitHub issues and draft pull requests.
 An auditor can support 5–10 repositories in one batch; a maintainer can use the same
@@ -6,7 +6,7 @@ workflow for their own repository.
 
 **Input: report + mode → Output: review and publish → Feedback: act and respond in GitHub.**
 
-RepoRemedy consumes RepoAuditor text or OpenSSF Scorecard JSON. It is a standalone
+shadowRepoRemedy consumes RepoAuditor text or OpenSSF Scorecard JSON. It is a standalone
 companion: no plugins, imports, or changes to either auditor. It acts on existing
 findings and does not add new best-practice checks.
 
@@ -15,16 +15,19 @@ findings and does not add new best-practice checks.
 The CLI uses Typer for typed commands, help, and optional shell completion.
 Requires Python 3.11+ and a GitHub repository. From a checkout of the implementation:
 
+The distribution and command are named `shadowRepoRemedy`; the Python module is
+`shadowreporemedy` (for example, `python -m shadowreporemedy --help`).
+
 ```sh
 uv tool install .
-reporemedy --help
+shadowRepoRemedy --help
 # Run directly from this checkout without a persistent tool install:
-uvx --from . reporemedy --help
-reporemedy preview report.json --repo OWNER/REPO --report-type ossf-scorecard --out runs/first
+uvx --from . shadowRepoRemedy --help
+shadowRepoRemedy preview report.json --repo OWNER/REPO --report-type ossf-scorecard --out runs/first
 ```
 
 No model setup is needed for the default **non-LLM** mode. If you already use
-`gh auth login`, RepoRemedy reuses that session. Otherwise, copy `.env.example` to
+`gh auth login`, shadowRepoRemedy reuses that session. Otherwise, copy `.env.example` to
 `.env` and set `GITHUB_TOKEN`. An unauthenticated public preview also works within
 GitHub's lower rate limit. Nothing is published by `preview`.
 
@@ -34,8 +37,8 @@ verification, original evidence, and any fields the maintainer needs to fill.
 
 ```sh
 # Replace PROPOSAL_ID with an ID from the preview. The CLI asks for confirmation.
-reporemedy publish runs/first --select PROPOSAL_ID
-reporemedy feedback runs/first
+shadowRepoRemedy publish runs/first --select PROPOSAL_ID
+shadowRepoRemedy feedback runs/first
 ```
 
 A maintainer receives one of three actionable outcomes:
@@ -47,16 +50,16 @@ A maintainer receives one of three actionable outcomes:
 | Change an existing file | Draft PR with a focused diff and validation steps |
 
 Maintainers review, adapt, merge, decline and comment in GitHub. They do not need
-to install RepoRemedy to respond. Acting easily means lowering specialist knowledge,
+to install shadowRepoRemedy to respond. Acting easily means lowering specialist knowledge,
 research and manual effort; templates must disclose the remaining work.
 
 ## Choose a report and mode
 
 ```sh
-reporemedy preview report.txt --repo OWNER/REPO --report-type repoauditor --out runs/text
-reporemedy preview report.json --repo OWNER/REPO --report-type ossf-scorecard --mode local-llm --out runs/local
-reporemedy preview report.json --repo OWNER/REPO --report-type ossf-scorecard --mode llm --out runs/hosted
-reporemedy batch batch.json --out runs/pilot --mode non-llm
+shadowRepoRemedy preview report.txt --repo OWNER/REPO --report-type repoauditor --out runs/text
+shadowRepoRemedy preview report.json --repo OWNER/REPO --report-type ossf-scorecard --mode local-llm --out runs/local
+shadowRepoRemedy preview report.json --repo OWNER/REPO --report-type ossf-scorecard --mode llm --out runs/hosted
+shadowRepoRemedy batch batch.json --out runs/pilot --mode non-llm
 ```
 
 | Mode | Setup |
@@ -83,7 +86,7 @@ scorecard --repo=github.com/OWNER/REPO --format=json > report.json
 ```
 
 See [supported formats](docs/report-formats.md) before importing older exports.
-Report generation is not part of the RepoRemedy command or runtime dependencies.
+Report generation is not part of the shadowRepoRemedy command or runtime dependencies.
 
 ## Documentation
 
@@ -109,4 +112,4 @@ uv build
 
 GitHub CI runs these checks on Linux, macOS and Windows with Python 3.11 and 3.13.
 Publication always requires selected IDs and confirmation. PRs remain drafts;
-RepoRemedy never changes settings directly, force-pushes or merges changes.
+shadowRepoRemedy never changes settings directly, force-pushes or merges changes.

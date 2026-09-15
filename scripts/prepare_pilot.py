@@ -5,8 +5,8 @@ import csv
 import json
 from pathlib import Path
 
-from reporemedy.batch import BatchItem
-from reporemedy.models import repository_name
+from shadowreporemedy.batch import BatchItem
+from shadowreporemedy.models import repository_name
 
 
 def main() -> None:

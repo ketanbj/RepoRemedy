@@ -6,17 +6,18 @@ import time
 from pathlib import Path
 from typing import Any
 
-from reporemedy.catalog import proposal_id
-from reporemedy.context import load_context
-from reporemedy.errors import RemedyError
-from reporemedy.github import GitHub
-from reporemedy.models import Context, Proposal, Run
-from reporemedy.preview import body
-from reporemedy.providers import validate_proposal
-from reporemedy.storage import atomic_json, read_run, run_lock
+from shadowreporemedy.catalog import proposal_id
+from shadowreporemedy.context import load_context
+from shadowreporemedy.errors import RemedyError
+from shadowreporemedy.github import GitHub
+from shadowreporemedy.models import Context, Proposal, Run
+from shadowreporemedy.preview import body
+from shadowreporemedy.providers import validate_proposal
+from shadowreporemedy.storage import atomic_json, read_run, run_lock
 
 
 def marker(proposal: Proposal) -> str:
+    # Keep persisted markers stable across the project rename.
     return f"<!-- reporemedy:v1:{proposal.id} -->"
 
 
@@ -81,6 +82,7 @@ def writable_repository(github: GitHub, repository: str, user: str) -> str:
 def create_pr(github: GitHub, run: Run, proposal: Proposal, context: Context, user: str) -> Any:
     target = writable_repository(github, run.repository, user)
     root = f"/repos/{target}"
+    # Keep resumable branch names stable across the project rename.
     branch = f"reporemedy/{proposal.id}-{run.base_commit[:8]}"
     ref = github.request("GET", f"{root}/git/ref/heads/{branch}", missing_ok=True)
     if ref:
@@ -142,8 +144,9 @@ def publication_body(run: Run, proposal: Proposal) -> str:
         f"report SHA-256: `{run.report.source_sha256}`.\n"
         f"Preview base: `{run.base_commit}`; mode: `{run.mode}`.\n\n"
         "For machine-readable feedback, a maintainer can comment on a separate line:\n"
-        "`reporemedy: accepted`, `reporemedy: declined`, `reporemedy: needs-adjustment`, "
-        "or `reporemedy: too-difficult`. Free-text feedback is welcome too.\n\n"
+        "`shadowRepoRemedy: accepted`, `shadowRepoRemedy: declined`, "
+        "`shadowRepoRemedy: needs-adjustment`, "
+        "or `shadowRepoRemedy: too-difficult`. Free-text feedback is welcome too.\n\n"
         + marker(proposal)
         + "\n"
     )

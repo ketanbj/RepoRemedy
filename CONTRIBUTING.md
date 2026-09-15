@@ -1,6 +1,6 @@
 # Contributing and release checks
 
-Use Python 3.11+ and `uv sync --locked`. Code lives under `src/reporemedy`; tests use
+Use Python 3.11+ and `uv sync --locked`. Code lives under `src/shadowreporemedy`; tests use
 in-memory HTTP transports and temporary files, with no production credentials.
 
 ```sh
