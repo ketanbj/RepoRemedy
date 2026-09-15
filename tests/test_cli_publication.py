@@ -96,3 +96,16 @@ def test_publication_failure_returns_one_and_closes_client(publication, monkeypa
     assert main(["publish", str(out), "--select", run.proposals[0].id, "--yes"]) == 1
     assert "permission denied" in capsys.readouterr().out
     assert github.client.is_closed
+
+
+def test_feedback_uses_its_directory_and_returns_zero(publication, monkeypatch, capsys):
+    _, out, _, github = publication
+
+    def collect(directory, client):
+        assert directory == out and client is github
+        return {"summary": "1 pending"}
+
+    monkeypatch.setattr("reporemedy.cli.collect_feedback", collect)
+    assert main(["feedback", str(out)]) == 0
+    assert capsys.readouterr().out.strip() == "1 pending"
+    assert github.client.is_closed

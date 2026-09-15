@@ -9,6 +9,7 @@ from reporemedy import __version__
 from reporemedy.config import github_token, load_environment
 from reporemedy.context import load_context
 from reporemedy.errors import RemedyError
+from reporemedy.feedback import collect_feedback
 from reporemedy.github import GitHub
 from reporemedy.models import Mode, ReportType
 from reporemedy.preview import prepare, write_preview
@@ -109,6 +110,18 @@ def publish_proposals(
                 f"{receipt.get('url', receipt.get('error', ''))}"
             )
         raise typer.Exit(1 if any(r["status"] == "failed" for r in receipts) else 0)
+    finally:
+        github.close()
+
+
+@app.command("feedback")
+def feedback(directory: Path) -> None:
+    """Read GitHub decisions and maintainer feedback."""
+    load_environment()
+    github = GitHub(github_token())
+    try:
+        result = collect_feedback(directory, github)
+        print(result["summary"])
     finally:
         github.close()
 
