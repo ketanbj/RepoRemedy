@@ -9,9 +9,14 @@ from urllib.parse import urlsplit
 import httpx
 from pydantic import Field, ValidationError
 
-from reporemedy.catalog import proposal_id
+from reporemedy.catalog import proposal_id, propose_fixed
 from reporemedy.errors import RemedyError
 from reporemedy.models import Change, Context, Contract, Finding, Mode, Outcome, Proposal
+
+
+class ModelChange(Contract):
+    path: str
+    content: str
 
 
 class Draft(Contract):
@@ -22,8 +27,8 @@ class Draft(Contract):
     effort: str = Field(min_length=1, max_length=2000)
     steps: list[str] = Field(min_length=1, max_length=20)
     validation: list[str] = Field(min_length=1, max_length=20)
-    required_inputs: list[str] = Field(default_factory=list)
-    changes: list[Change] = Field(default_factory=list, max_length=5)
+    required_inputs: list[str]
+    changes: list[ModelChange] = Field(max_length=5)
 
 
 class Response(Contract):
@@ -46,6 +51,8 @@ verification.
 For a file, provide complete proposed content; preserve unrelated content. Existing files may
 only be
 edited when included in context. New files may only be SECURITY.md or CONTRIBUTING.md.
+Paths are repository-relative: NEVER start a file path with /.
+For setting actions changes MUST be an empty list, because settings are not files.
 No deletion, executable code, workflow changes or automatic publishing. A proposal is a DRAFT.
 Missing essential information or conflicting guidelines: return needs-input with a specific
 question.
@@ -57,6 +64,23 @@ SECRET = re.compile(
     r"(?:github_pat_[A-Za-z0-9_]+|gh[pousr]_[A-Za-z0-9]+|sk-[A-Za-z0-9_-]{16,}"
     r"|-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----)"
 )
+
+
+def generation_schema() -> dict[str, Any]:
+    # Ollama's grammar compiler rejects very large bounded string productions.
+    # Keep types/required fields/enums for generation; enforce ALL bounds after parsing.
+    def clean(value: Any) -> Any:
+        if isinstance(value, dict):
+            return {
+                k: clean(v)
+                for k, v in value.items()
+                if k not in {"maxLength", "minLength", "maxItems", "minItems", "default"}
+            }
+        if isinstance(value, list):
+            return [clean(v) for v in value]
+        return value
+
+    return dict(clean(Response.model_json_schema()))
 
 
 def redact(text: str) -> str:
@@ -116,13 +140,24 @@ class ModelProvider:
         try:
             response = self.client.post(path, json=data)
             response.raise_for_status()
-            return response.json()
+            data = response.json()
+            if not isinstance(data, dict):
+                raise RemedyError("Model endpoint returned a non-object response")
+            return data
         except (httpx.HTTPError, ValueError) as exc:
             raise RemedyError(
                 "Model request failed; check endpoint, model access and server health"
             ) from exc
 
     def propose(self, finding: Finding, context: Context) -> Proposal | Outcome:
+        try:
+            return self._propose(finding, context)
+        except (ValidationError, ValueError, TypeError, KeyError) as exc:
+            raise RemedyError(
+                "Model output is incomplete or unsafe; try another model or triage manually"
+            ) from exc
+
+    def _propose(self, finding: Finding, context: Context) -> Proposal | Outcome:
         if finding.status == "unavailable":
             return Outcome(finding=finding.key, status="skipped", message="Assessment unavailable.")
         if any("not read" in n for n in context.notices):
@@ -131,7 +166,7 @@ class ModelProvider:
                 status="needs-input",
                 message="Guidelines could not be read; resolve context limits first.",
             )
-        payload = {
+        payload: dict[str, Any] = {
             "finding": finding.model_dump(),
             "repository": context.repository,
             "default_branch": context.default_branch,
@@ -142,6 +177,14 @@ class ModelProvider:
             "context_notes": context.notices,
             "response_schema": Response.model_json_schema(),
         }
+        baseline = propose_fixed(finding, context)
+        if isinstance(baseline, Proposal):
+            payload["reviewed_starting_point"] = baseline.model_dump(
+                exclude={"id", "finding", "warnings", "changes"}
+            )
+            payload["reviewed_starting_point"]["changes"] = [
+                {"path": c.path, "content": c.content} for c in baseline.changes
+            ]
         messages = [
             {"role": "system", "content": SYSTEM},
             {"role": "user", "content": redact(json.dumps(payload, ensure_ascii=False))},
@@ -153,7 +196,7 @@ class ModelProvider:
                     "model": self.model,
                     "messages": messages,
                     "stream": False,
-                    "format": Response.model_json_schema(),
+                    "format": generation_schema(),
                     "options": {"temperature": 0, "num_predict": 3000, "num_ctx": 16384},
                 },
             )
@@ -184,7 +227,8 @@ class ModelProvider:
         if not response.proposal:
             raise RemedyError("Model declared a proposal but did not provide one")
         draft = response.proposal
-        for change in draft.changes:
+        changes = [Change(path=c.path, content=c.content) for c in draft.changes]
+        for change in changes:
             if change.path in context.paths:
                 old = context.files.get(change.path)
                 if old is None:
@@ -203,7 +247,8 @@ class ModelProvider:
         proposal = Proposal(
             id=proposal_id(context.repository, finding.key),
             finding=finding,
-            **draft.model_dump(),
+            **draft.model_dump(exclude={"changes"}),
+            changes=changes,
             warnings=["Model-generated: verify all claims and changes."],
         )
         validate_proposal(proposal)
@@ -223,6 +268,11 @@ def validate_proposal(proposal: Proposal) -> None:
     if len({c.path for c in proposal.changes}) != len(proposal.changes):
         raise RemedyError("Duplicate file changes are ambiguous")
     for change in proposal.changes:
+        if (
+            re.search(r"\b(TODO|placeholder|FILL IN)\b", change.content, re.I)
+            and not proposal.required_inputs
+        ):
+            raise RemedyError("Template placeholders must be explained in required project inputs")
         if bool(change.previous_sha) != (change.previous_content is not None):
             raise RemedyError("Existing-file changes require both original content and SHA")
         if (proposal.action == "add-file") == bool(change.previous_sha):

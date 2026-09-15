@@ -1,6 +1,7 @@
 """OpenSSF Scorecard v5 JSON and the OSPO prototype's report envelopes."""
 
 import json
+import re
 from typing import Any
 
 from reporemedy.errors import RemedyError
@@ -34,8 +35,11 @@ def read_scorecard(text: str, repository: str, digest: str) -> Report:
             "Multiple reports match; export exactly one scan to avoid stale selection"
         )
     report = matching[0]
-    version = report.get("scorecard", {}).get("version", "")
-    if not isinstance(version, str) or not version.startswith("v5."):
+    metadata = report.get("scorecard")
+    if not isinstance(metadata, dict):
+        raise RemedyError("Scorecard version metadata must be an object")
+    version = metadata.get("version", "")
+    if not isinstance(version, str) or not re.fullmatch(r"v5\.\d+\.\d+(?:[-+].+)?", version):
         raise RemedyError("Supported Scorecard exports: v5.x JSON with checks[]")
     checks = report.get("checks")
     if not isinstance(checks, list) or not checks:

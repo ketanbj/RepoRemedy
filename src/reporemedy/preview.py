@@ -78,9 +78,12 @@ def prepare(
         notices.append(
             "Report commit differs from current default branch; review stale evidence carefully."
         )
+    for proposal in proposals:
+        proposal.warnings.extend(n for n in notices if n not in proposal.warnings)
     return Run(
         repository=report.repository,
         mode=mode,
+        model_name=provider.model if provider else None,
         report=report,
         default_branch=context.default_branch,
         base_commit=context.commit,
@@ -119,7 +122,7 @@ def body(proposal: Proposal) -> str:
 def write_preview(run: Run, directory: Path) -> None:
     # Exclusive creation prevents clobbering an earlier reviewed run.
     try:
-        directory.mkdir(parents=True, exist_ok=False)
+        directory.mkdir(parents=True, exist_ok=False, mode=0o700)
     except FileExistsError as exc:
         raise RemedyError("Output already exists; choose a new --out directory") from exc
     (directory / "run.json").write_text(run.model_dump_json(indent=2) + "\n", encoding="utf-8")

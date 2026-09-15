@@ -43,7 +43,7 @@ def batch_preview(
     if not isinstance(raw, list) or not 1 <= len(raw) <= 10:
         raise RemedyError("A batch must contain between 1 and 10 repository inputs")
     try:
-        directory.mkdir(parents=True, exist_ok=False)
+        directory.mkdir(parents=True, exist_ok=False, mode=0o700)
     except FileExistsError as exc:
         raise RemedyError("Batch output exists; use a new --out directory") from exc
     results: list[dict[str, Any]] = []

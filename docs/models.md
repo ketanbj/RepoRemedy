@@ -3,8 +3,8 @@
 `non-llm` (default) uses the reviewed response catalog and needs no model setup.
 There is no automatic fallback between modes.
 
-For local inference, run Ollama, install a model (`ollama pull llama3`), then set
-`OLLAMA_MODEL=llama3` in `.env`. `--mode local-llm` uses the loopback Ollama API.
+For local inference, run Ollama, install a model (`ollama pull qwen2.5:3b`), then set
+`OLLAMA_MODEL=qwen2.5:3b` in `.env`. `--mode local-llm` uses the loopback Ollama API.
 The tool checks model metadata and rejects cloud-backed models, even aliases.
 
 For hosted inference, use `--mode llm` and set `LLM_BASE_URL`, `LLM_MODEL` and,
@@ -38,3 +38,15 @@ Network timeouts and invalid outputs fail that finding without hiding other outc
 
 Protocol references: [Ollama chat](https://docs.ollama.com/api/chat),
 [Ollama cloud](https://docs.ollama.com/cloud).
+
+The pilot used `qwen2.5:3b` through Ollama 0.32.14 locally and
+`gpt-oss:120b-cloud` through the authenticated Ollama gateway for hosted calls.
+These are tested configurations, not model weights bundled with RepoRemedy.
+Check the model's own license and deployment suitability (the
+[3B model has separate terms](https://ollama.com/library/qwen2.5:3b)).
+The saved run records the selected model name. Model output can vary across versions.
+
+Local generation uses a simplified structural schema compatible with Ollama's
+grammar compiler. Full length, path, original-content and action validation still
+runs in RepoRemedy after generation. Reviewed catalog responses are supplied as
+starting points where available; the model is consulted in both model modes.

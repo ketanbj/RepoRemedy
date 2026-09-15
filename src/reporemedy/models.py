@@ -122,6 +122,7 @@ class Run(Contract):
     schema_version: int = Field(default=1, ge=1, le=1)
     repository: str
     mode: Mode
+    model_name: str | None = None
     report: Report
     default_branch: str
     base_commit: str
