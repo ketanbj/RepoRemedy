@@ -1,0 +1,4 @@
+[
+  {"repository": "OWNER/REPO_ONE", "report": "reports/one.json", "report_type": "ossf-scorecard"},
+  {"repository": "OWNER/REPO_TWO", "report": "reports/two.txt", "report_type": "repoauditor"}
+]
