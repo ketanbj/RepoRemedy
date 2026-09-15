@@ -18,3 +18,13 @@ uv run mypy
 
 Report import is read-only. See [supported report formats](docs/report-formats.md).
 Remediation and publication are delivered in subsequent, dependent PRs.
+
+Preview an initial fixed remedy:
+
+```sh
+uv run reporemedy preview report.json --repo OWNER/REPO --report-type ossf-scorecard --out runs/first
+```
+
+Read `runs/first/README.md`, the proposal Markdown and the `.patch` files.
+Public previews use your `gh auth login` session, or `GITHUB_TOKEN` in `.env`.
+See the [initial response catalog](docs/remedies.md).
