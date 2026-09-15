@@ -6,6 +6,7 @@ from typing import Annotated
 import typer
 
 from reporemedy import __version__
+from reporemedy.batch import batch_preview
 from reporemedy.config import github_token, load_environment
 from reporemedy.context import load_context
 from reporemedy.errors import RemedyError
@@ -77,6 +78,7 @@ def preview_report(
         github.close()
         if provider:
             provider.close()
+    raise typer.Exit(1 if any(o.status == "failed" for o in run.outcomes) else 0)
 
 
 @app.command("publish")
@@ -124,6 +126,37 @@ def feedback(directory: Path) -> None:
         print(result["summary"])
     finally:
         github.close()
+
+
+@app.command("batch")
+def batch(
+    manifest: Path,
+    out: Annotated[Path, typer.Option(help="Batch output directory")] = Path("runs/batch"),
+    mode: Annotated[Mode, typer.Option(help="Remediation mode")] = Mode.FIXED,
+    limit: Annotated[int, typer.Option(help="Maximum remedies/model calls per repository")] = 3,
+) -> None:
+    """Preview 1–10 repositories from a JSON manifest."""
+    load_environment()
+    if not 1 <= limit <= 25:
+        raise RemedyError("--limit must be between 1 and 25")
+    provider = ModelProvider(mode) if mode != Mode.FIXED else None
+    github = GitHub(github_token())
+    try:
+        summary = batch_preview(
+            manifest,
+            out,
+            github,
+            mode,
+            provider,
+            limit,
+            progress=lambda message: print(message, flush=True),
+        )
+        print(f"Review {out / 'README.md'}. Nothing published.")
+        raise typer.Exit(1 if any(r["status"] != "completed" for r in summary["items"]) else 0)
+    finally:
+        github.close()
+        if provider:
+            provider.close()
 
 
 def main(argv: list[str] | None = None) -> int:
